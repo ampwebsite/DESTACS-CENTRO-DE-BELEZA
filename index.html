@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Destac's Centro de Beleza | Salão de beleza em Imbituba, SC</title>
+
+<!-- Segurança (base reaproveitada: CSP, nosniff, referrer) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'none'; frame-src 'none'; object-src 'none';">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Destac's: salão de beleza em Imbituba há 35 anos. Cabelo, unhas, mega hair e noivas. Av. Brasil, 396, Paes Leme. Agende pelo WhatsApp.">
+<meta name="theme-color" content="#242124">
+<link rel="icon" type="image/jpeg" href="imagens/avatar-instagram.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Identidade da marca */
+  --terracota:      #794232;
+  --terracota-luz:  #E4A590;
+  --grafite:        #242124;
+  --branco:         #F7F7F5;
+  --branco-suave:   rgba(247,247,245,.78);
+  --linha:          rgba(228,165,144,.35);
+
+  --serif:  'Cormorant Garamond', 'Times New Roman', serif;
+  --script: 'Allura', 'Brush Script MT', cursive;
+  --sans:   'Jost', system-ui, sans-serif;
+
+  --nav-h: 76px;
+
+  /* Método de áreas úteis (mesmos valores da base do Ilton) */
+  --content-max-width: 360px;
+  --layout-gap: 16px;
+  --radius-ui: 4px; /* arredondamento leve de botões e caixas */
+  --side: 2rem; /* margem mínima lateral */
+  --gutter: max(var(--side), calc((100vw - var(--content-max-width)) / 2));
+}
+@media (min-width: 768px)  { :root { --content-max-width: 728px; } }
+@media (min-width: 881px)  { :root { --content-max-width: 780px; } }
+@media (min-width: 1025px) { :root { --content-max-width: 924px; } }
+@media (min-width: 1201px) { :root { --content-max-width: 1100px; --layout-gap: 32px; } }
+@media (min-width: 1367px) { :root { --content-max-width: 1280px; --layout-gap: 32px; } }
+
+html { scroll-behavior: smooth; }
+body { background: var(--grafite); color: var(--branco); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--terracota-luz); outline-offset: 3px; }
+
+/* ── NAV ── */
+.nav {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+  height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--gutter) 0;
+  background: rgba(36,33,36,.55);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(247,247,245,.1);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand { display: flex; align-items: center; gap: .9rem; }
+.brand img { width: 46px; height: 46px; border-radius: 50%; display: block; background: var(--terracota); }
+.brand-text { display: flex; flex-direction: column; line-height: 1; }
+.brand-name { font-family: var(--serif); font-weight: 600; font-size: 24px; letter-spacing: .06em; }
+.brand-sub { font-size: 10.5px; letter-spacing: .3em; margin-top: 5px; color: var(--terracota-luz); font-weight: 400; }
+
+.nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; }
+.nav-links a { font-size: 14px; font-weight: 400; letter-spacing: .04em; padding: .4rem 0; position: relative; color: var(--branco); }
+.nav-links a::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--terracota-luz); transition: width .25s; }
+.nav-links a:hover::after, .nav-links a.on::after { width: 100%; }
+.nav-links a.on { color: var(--terracota-luz); }
+.nav-links a.nav-book { background: var(--terracota); border: 1px solid var(--terracota); border-radius: var(--radius-ui); padding: .7rem 1.3rem; font-weight: 500; color: var(--branco); transition: background .25s, border-color .25s, color .25s; }
+.nav-links a.nav-book::after { display: none; }
+.nav-links a.nav-book:hover { background: var(--terracota-luz); border-color: var(--terracota-luz); color: var(--grafite); }
+
+.burger { display: none; background: none; border: 0; cursor: pointer; padding: 10px; margin-right: -10px; }
+.burger span { display: block; width: 24px; height: 1.5px; background: var(--branco); margin: 5px 0; transition: transform .3s, opacity .3s; }
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ── HERO ── */
+.hero {
+  position: relative; isolation: isolate;
+  min-height: 100vh; min-height: 100svh;
+  display: flex; align-items: center;
+  padding: calc(var(--nav-h) + env(safe-area-inset-top, 0px) + 3rem) var(--gutter) 6rem;
+  overflow: hidden;
+}
+
+.slides { position: absolute; inset: 0; z-index: -2; }
+.slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease; }
+.slide.on { opacity: 1; }
+.slide img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.06); transition: transform 7s ease-out; }
+.slide.on img { transform: scale(1); }
+
+/* escurecimento: leitura do texto à esquerda, foto respira à direita */
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(36,33,36,.92) 0%, rgba(36,33,36,.74) 42%, rgba(36,33,36,.22) 100%),
+    linear-gradient(0deg, rgba(36,33,36,.7) 0%, rgba(36,33,36,0) 28%);
+}
+
+.hero-copy { width: 100%; max-width: 760px; }
+
+.kicker {
+  margin-bottom: 1.1rem;
+  font-family: var(--sans); font-size: clamp(12px, 1.2vw, 14px); font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--terracota-luz);
+}
+
+.title {
+  font-family: var(--serif); font-weight: 500;
+  font-size: clamp(42px, 7vw, 100px); line-height: 1.02; letter-spacing: .005em;
+  text-wrap: balance;
+}
+
+.services {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.1rem;
+  margin: 1.6rem 0 2.4rem;
+  font-size: clamp(15px, 1.5vw, 17px); font-weight: 400; letter-spacing: .03em;
+  color: var(--terracota-luz);
+}
+.services i { width: 5px; height: 5px; background: var(--terracota-luz); transform: rotate(45deg); opacity: .6; }
+
+/* dois botões sempre do mesmo tamanho: lado a lado no desktop, empilhados até 767px */
+.actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; width: min(100%, 580px); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .65rem;
+  min-height: 52px; padding: 0 1.9rem;
+  font-family: var(--sans); font-size: 15px; font-weight: 500; letter-spacing: .03em;
+  border: 1px solid var(--terracota-luz); border-radius: var(--radius-ui); cursor: pointer;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.btn svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
+.btn-main { background: var(--terracota); border-color: var(--terracota); color: var(--branco); }
+.btn-main:hover { background: var(--terracota-luz); border-color: var(--terracota-luz); color: var(--grafite); }
+.btn-line { background: rgba(36,33,36,.35); color: var(--branco); }
+.btn-line:hover { background: var(--branco); border-color: var(--branco); color: var(--grafite); }
+
+/* ── DOTS ── */
+.dots { position: absolute; right: var(--gutter); bottom: calc(2.2rem + env(safe-area-inset-bottom, 0px)); display: flex; gap: .6rem; z-index: 5; }
+.dot { width: 34px; height: 24px; background: none; border: 0; cursor: pointer; position: relative; }
+.dot::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: rgba(247,247,245,.35); transition: background .3s; }
+.dot.on::before { background: var(--terracota-luz); }
+
+
+/* ── SERVIÇOS ── */
+.servicos { background: var(--branco); color: var(--grafite); padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter); }
+.servicos-title {
+  font-family: var(--serif); font-weight: 500; text-align: center;
+  font-size: clamp(28px, 3.2vw, 42px); line-height: 1.1; letter-spacing: .01em;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* 6 em uma fileira no desktop; 3 + 3 no tablet; 2 em 2 no mobile */
+.servicos-grid { --gap: var(--layout-gap); --cols: 6; display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem var(--gap); list-style: none; }
+.servico { width: calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.arc {
+  position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden;
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(180deg, #F6E1D7 0%, #EFC9B9 100%);
+}
+.arc::after { content: ''; position: absolute; inset: 8px; border: 1px solid rgba(121,66,50,.22); border-radius: 999px 999px 0 0; pointer-events: none; }
+.arc img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.servico-nome { font-family: var(--serif); font-size: 25px; font-weight: 600; line-height: 1.1; margin-top: .9rem; letter-spacing: .01em; color: var(--grafite); }
+.servico-obs { font-size: 13px; font-weight: 500; color: var(--terracota); margin-top: .25rem; }
+.servico-desc { font-size: 14px; font-weight: 400; line-height: 1.4; color: rgba(36,33,36,.72); margin-top: .45rem; }
+
+.servico .btn { margin-top: 1rem; width: 100%; min-height: 46px; padding: 0 .75rem; }
+.servico .btn-main:hover { color: var(--grafite); }
+.servico-txt { flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; }
+
+/* ── SOBRE NÓS ── */
+.sobre { background: var(--grafite); color: var(--branco); }
+/* foto sangra até a borda esquerda e termina no eixo central do container; o texto ocupa a metade direita */
+.sobre-main { display: grid; grid-template-columns: minmax(0, 1fr) calc((100vw - 2 * var(--gutter)) / 2 + var(--gutter)); min-height: clamp(360px, 38vw, 520px); }
+/* bloco centralizado na horizontal e na vertical dentro da própria coluna */
+.sobre-copy { padding: clamp(2.5rem, 5vw, 4.5rem) calc(var(--layout-gap) * 2); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.sobre-script { font-family: var(--script); font-size: clamp(30px, 3.4vw, 42px); line-height: 1; color: var(--terracota-luz); margin-bottom: .6rem; }
+.sobre-title { font-family: var(--serif); font-weight: 500; font-size: clamp(36px, 4.4vw, 60px); line-height: 1.05; margin-bottom: 1.4rem; }
+.sobre-text { font-size: 15px; line-height: 1.7; color: var(--branco-suave); max-width: 46ch; margin-bottom: 2rem; }
+.sobre-text strong { font-weight: 500; color: var(--branco); }
+.sobre-foto { position: relative; min-height: 280px; order: -1; }
+.sobre-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; display: block; }
+.sobre-foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(270deg, rgba(36,33,36,.55) 0%, rgba(36,33,36,0) 28%); pointer-events: none; }
+
+.stats { background: var(--terracota); color: var(--branco); }
+.stats-list { padding: 0 var(--gutter); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; }
+.stat { display: flex; align-items: center; justify-content: center; gap: .9rem; padding: 1.6rem .75rem; }
+.stat + .stat { border-left: 1px solid rgba(247,247,245,.22); }
+.stat svg { width: 34px; height: 34px; flex-shrink: 0; fill: none; stroke: var(--terracota-luz); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.stat-val { font-family: var(--serif); font-weight: 600; font-size: clamp(20px, 2vw, 26px); line-height: 1.1; }
+.stat-lab { font-size: 13px; line-height: 1.35; color: rgba(247,247,245,.8); margin-top: .15rem; }
+
+/* ── FAQ ── */
+.faq { background: var(--branco); color: var(--grafite); padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter); }
+.faq-title {
+  font-family: var(--serif); font-weight: 500; text-align: center;
+  font-size: clamp(28px, 3.2vw, 42px); line-height: 1.1; letter-spacing: .01em;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.faq-list { max-width: 760px; margin: 0 auto; border-top: 1px solid rgba(36,33,36,.15); }
+.faq-item { border-bottom: 1px solid rgba(36,33,36,.15); }
+.faq-item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  min-height: 56px; padding: 1.1rem 0; cursor: pointer; list-style: none;
+  font-family: var(--serif); font-size: clamp(20px, 2.2vw, 25px); font-weight: 600; line-height: 1.2;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: ''; flex-shrink: 0; width: 10px; height: 10px; margin-right: .3rem;
+  border-right: 2px solid var(--terracota); border-bottom: 2px solid var(--terracota);
+  transform: rotate(45deg); transition: transform .25s;
+}
+.faq-item[open]:not([data-state="closing"]) summary::after { transform: rotate(-135deg); }
+.faq-item summary:focus-visible { outline: 2px solid var(--terracota); outline-offset: 2px; }
+.faq-item p { padding: 0 2rem 1.4rem 0; font-size: 15px; line-height: 1.7; color: rgba(36,33,36,.78); }
+.faq-item p a { color: var(--terracota); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── RODAPÉ ── */
+.footer { background: #1c1a1c; color: var(--branco); }
+.footer-grid { padding: clamp(3rem, 5vw, 4.5rem) var(--gutter) clamp(2.5rem, 4vw, 3.5rem); display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.4fr 1.1fr; gap: 2.5rem var(--layout-gap); }
+.footer-brand .brand { margin-bottom: 1.1rem; }
+.footer-desc { font-size: 15px; line-height: 1.7; color: var(--branco-suave); max-width: 30ch; margin-bottom: 1.4rem; }
+.socials { display: flex; gap: .6rem; }
+.socials a { width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--linha); border-radius: 50%; transition: background .25s, border-color .25s; }
+.socials a:hover { background: var(--terracota); border-color: var(--terracota); }
+.socials svg { width: 17px; height: 17px; fill: none; stroke: var(--branco); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.footer-h { font-family: var(--serif); font-weight: 600; font-size: 22px; letter-spacing: .02em; color: var(--terracota-luz); margin-bottom: 1.1rem; }
+.footer-list { list-style: none; display: flex; flex-direction: column; gap: .7rem; font-size: 14px; color: var(--branco-suave); }
+.footer-list a:hover { color: var(--terracota-luz); }
+.footer-list .lab { display: block; font-size: 13px; color: rgba(247,247,245,.5); margin-bottom: .1rem; }
+.footer-cta p { font-size: 15px; line-height: 1.7; color: var(--branco-suave); margin-bottom: 1.1rem; }
+.footer-cta .btn { width: 100%; min-height: 46px; padding: 0 .75rem; font-size: 15px; }
+.footer-cta .btn-main:hover { color: var(--grafite); }
+
+.footer-bar { border-top: 1px solid rgba(247,247,245,.1); }
+.footer-bar-inner { padding: 1.3rem var(--gutter); padding-bottom: calc(1.3rem + env(safe-area-inset-bottom, 0px)); display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem; font-size: 13px; color: rgba(247,247,245,.6); }
+.footer-bar a { color: var(--terracota-luz); }
+.footer-bar a:hover { color: var(--branco); }
+
+/* ── MOBILE / TABLET ── */
+@media (max-width: 767px)  { .actions { grid-template-columns: minmax(0, 1fr); width: 100%; } }
+@media (max-width: 1100px) { .servicos-grid { --cols: 3; } }
+/* 768 a 1200 px: marca + agendamento lado a lado (3+3), depois três colunas iguais (2+2+2) */
+@media (max-width: 1200px) {
+  .footer-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .footer-brand { grid-column: span 3; order: 1; }
+  .footer-cta   { grid-column: span 3; order: 2; }
+  .footer-links, .footer-services, .footer-contact { grid-column: span 2; order: 3; }
+  .footer-desc { max-width: 46ch; }
+}
+/* até 767 px: duas colunas; marca, contato e agendamento ocupam a linha toda */
+@media (max-width: 767px) {
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-grid > * { order: 0; text-align: center; }
+  .footer-brand, .footer-contact, .footer-cta { grid-column: 1 / -1; }
+  .footer-links, .footer-services { grid-column: auto; }
+  /* empilhado: tudo centralizado */
+  .footer-brand .brand { justify-content: center; }
+  .footer-desc { margin-inline: auto; }
+  .socials { justify-content: center; }
+  .footer-list { align-items: center; }
+  .footer-cta .btn { display: flex; max-width: 360px; margin-inline: auto; }
+  .footer-bar-inner { justify-content: center; text-align: center; }
+}
+@media (max-width: 900px) {
+  .sobre-main { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .sobre-copy { padding-inline: var(--gutter); }
+  .sobre-foto { order: 2; width: 100%; min-height: 0; aspect-ratio: 4 / 3; }
+  .sobre-foto::after { background: linear-gradient(0deg, rgba(36,33,36,.4) 0%, rgba(36,33,36,0) 30%); }
+  .stats-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:nth-child(3) { border-left: 0; }
+  .stat:nth-child(n+3) { border-top: 1px solid rgba(247,247,245,.22); }
+}
+@media (max-width: 767px)  { .servicos-grid { --cols: 2; } }
+@media (max-width: 960px) {
+  .nav-links {
+    position: fixed; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); left: 0; right: 0;
+    flex-direction: column; align-items: flex-start; gap: 0;
+    background: rgba(36,33,36,.97); padding: .5rem var(--gutter) 1.5rem;
+    border-bottom: 1px solid var(--linha);
+    transform: translateY(-12px); opacity: 0; visibility: hidden;
+    transition: opacity .25s, transform .25s, visibility .25s;
+  }
+  .nav-links.open { opacity: 1; transform: none; visibility: visible; }
+  .nav-links li { width: 100%; border-bottom: 1px solid rgba(247,247,245,.08); }
+  .nav-links a { display: block; padding: 1rem 0; font-size: 16px; }
+  .nav-links li:last-child { border-bottom: 0; padding-top: 1rem; }
+  .nav-links a.nav-book { text-align: center; padding: .95rem 1rem; }
+  .burger { display: block; }
+}
+@media (max-width: 640px) {
+  :root { --nav-h: 68px; }
+  .brand-name { font-size: 21px; }
+  .brand img { width: 40px; height: 40px; }
+  .hero { align-items: flex-end; padding-bottom: 6.5rem; }
+  .hero::before { background: linear-gradient(0deg, rgba(36,33,36,.94) 0%, rgba(36,33,36,.7) 55%, rgba(36,33,36,.35) 100%); }
+  .dots { right: auto; left: var(--gutter); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .slide { transition: none; }
+  .slide img { transition: none; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <a class="brand" href="#inicio" aria-label="Destac's Centro de Beleza, início">
+    <img src="imagens/avatar-instagram.jpg" width="150" height="150" alt="">
+    <span class="brand-text">
+      <span class="brand-name">DESTAC'S</span>
+      <span class="brand-sub">CENTRO DE BELEZA</span>
+    </span>
+  </a>
+  <ul class="nav-links" id="menu">
+    <li><a href="#inicio" class="on">Início</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre Nós</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a class="nav-book" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer">Agendar horário</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<main>
+<section class="hero" id="inicio" aria-label="Apresentação">
+  <div class="slides" id="slides" aria-hidden="true">
+    <!-- Fotos do slider -->
+    <div class="slide on"><img src="imagens/interior-maps.jpg" width="1600" height="1200" alt="" style="object-position:60% 50%"></div>
+    <div class="slide"><img loading="lazy" src="imagens/fachada-maps.jpg" width="1555" height="1167" alt="" style="object-position:50% 40%"></div>
+    <div class="slide"><img loading="lazy" src="imagens/mechas-instagram-2026.jpg" width="959" height="959" alt="" style="object-position:50% 30%"></div>
+  </div>
+
+  <div class="hero-copy">
+    <p class="kicker">Salão de beleza em Imbituba · Paes Leme</p>
+    <h1 class="title">Há 35 anos a sua beleza é o nosso compromisso</h1>
+    <p class="services">
+      <span>Cabelo</span><i></i><span>Unhas</span><i></i><span>Mega hair</span><i></i><span>Noivas</span><i></i><span>Formaturas</span>
+    </p>
+    <div class="actions">
+      <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.78a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88M20.46 3.49A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.69 1.45c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42"/></svg>
+        Agendar pelo WhatsApp
+      </a>
+      <a class="btn btn-line" href="https://www.google.com/maps/search/Destac%27s+Centro+de+Beleza+Imbituba+SC" target="_blank" rel="noopener noreferrer">Como chegar</a>
+    </div>
+  </div>
+
+  <div class="dots" id="dots" role="group" aria-label="Fotos do salão"></div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos" aria-labelledby="servicos-titulo">
+  <div class="servicos-inner">
+    <h2 class="servicos-title" id="servicos-titulo">Nossos serviços</h2>
+
+    <!-- Fotos de banco (Unsplash License, uso comercial livre). Para trocar, altere o src do <img> dentro do .arc -->
+    <ul class="servicos-grid">
+      <li class="servico">
+        <div class="arc"><img loading="lazy" src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?auto=format&amp;fit=crop&amp;w=720&amp;h=960&amp;q=75" alt=""></div>
+        <div class="servico-txt">
+          <p class="servico-nome">Cabelo</p>
+          <p class="servico-desc">Corte, coloração, mechas e escova</p>
+        </div>
+        <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%3A%20Cabelo." target="_blank" rel="noopener noreferrer" aria-label="Agendar Cabelo pelo WhatsApp">Agendar</a>
+      </li>
+      <li class="servico">
+        <div class="arc"><img loading="lazy" src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&amp;fit=crop&amp;w=720&amp;h=960&amp;q=75" alt=""></div>
+        <div class="servico-txt">
+          <p class="servico-nome">Unhas</p>
+          <p class="servico-desc">Manicure e pedicure</p>
+        </div>
+        <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%3A%20Unhas." target="_blank" rel="noopener noreferrer" aria-label="Agendar Unhas pelo WhatsApp">Agendar</a>
+      </li>
+      <li class="servico">
+        <div class="arc"><img loading="lazy" src="https://images.unsplash.com/photo-1437196901007-82f158632679?auto=format&amp;fit=crop&amp;w=720&amp;h=960&amp;q=75" alt=""></div>
+        <div class="servico-txt">
+          <p class="servico-nome">Mega hair</p>
+          <p class="servico-desc">Aplicação e manutenção</p>
+        </div>
+        <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%3A%20Mega%20hair." target="_blank" rel="noopener noreferrer" aria-label="Agendar Mega hair pelo WhatsApp">Agendar</a>
+      </li>
+      <li class="servico">
+        <div class="arc"><img loading="lazy" src="https://images.unsplash.com/photo-1619607146034-5a05296c8f9a?auto=format&amp;fit=crop&amp;w=720&amp;h=960&amp;q=75" alt=""></div>
+        <div class="servico-txt">
+          <p class="servico-nome">Produtos</p>
+          <p class="servico-desc">Produtos profissionais para cabelo</p>
+        </div>
+        <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20produtos." target="_blank" rel="noopener noreferrer" aria-label="Consultar Produtos pelo WhatsApp">Consultar</a>
+      </li>
+      <li class="servico">
+        <div class="arc"><img loading="lazy" src="https://images.unsplash.com/photo-1759675905846-d9ec793714af?auto=format&amp;fit=crop&amp;w=720&amp;h=960&amp;q=75" alt=""></div>
+        <div class="servico-txt">
+          <p class="servico-nome">Noivas</p>
+          <p class="servico-obs">Atendimento externo</p>
+          <p class="servico-desc">No local do seu evento</p>
+        </div>
+        <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%3A%20Noivas." target="_blank" rel="noopener noreferrer" aria-label="Agendar Noivas pelo WhatsApp">Agendar</a>
+      </li>
+      <li class="servico">
+        <div class="arc"><img loading="lazy" src="https://images.unsplash.com/photo-1668885973738-d9f83d172912?auto=format&amp;fit=crop&amp;w=720&amp;h=960&amp;q=75" alt=""></div>
+        <div class="servico-txt">
+          <p class="servico-nome">Formaturas</p>
+          <p class="servico-desc">Penteado para a sua formatura</p>
+        </div>
+        <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio%3A%20Formaturas." target="_blank" rel="noopener noreferrer" aria-label="Agendar Formaturas pelo WhatsApp">Agendar</a>
+      </li>
+    </ul>
+  </div>
+</section>
+<!-- SOBRE NÓS -->
+<section class="sobre" id="sobre" aria-labelledby="sobre-titulo">
+  <div class="sobre-main">
+    <div class="sobre-copy">
+      <p class="sobre-script">Conheça a Destac's</p>
+      <h2 class="sobre-title" id="sobre-titulo">Sobre Nós</h2>
+      <p class="sobre-text">A Destac's Centro de Beleza tem <strong>35 anos de história</strong> em Imbituba. Fica na Av. Brasil, 396, no bairro Paes Leme, com atendimento de cabelo, unhas e mega hair no salão, e atendimento externo para noivas.</p>
+      <a class="btn btn-line" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+    </div>
+    <div class="sobre-foto">
+      <img loading="lazy" src="imagens/ambiente-maps.jpg" width="1600" height="1200" alt="Recepção do salão com poltronas pretas e quadro em preto e branco na parede">
+    </div>
+  </div>
+
+  <div class="stats">
+    <ul class="stats-list">
+      <li class="stat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.4l6-.9z"/></svg>
+        <div><p class="stat-val">35 anos</p><p class="stat-lab">de história</p></div>
+      </li>
+      <li class="stat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div><p class="stat-val">8h às 18h</p><p class="stat-lab">Terça a sábado</p></div>
+      </li>
+      <li class="stat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10A4.4 4.4 0 0 1 12 7.6a4.4 4.4 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10z"/></svg>
+        <div><p class="stat-val">Noivas</p><p class="stat-lab">Atendimento externo</p></div>
+      </li>
+      <li class="stat">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <div><p class="stat-val">Av. Brasil, 396</p><p class="stat-lab">Paes Leme, Imbituba</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- PERGUNTAS FREQUENTES -->
+<section class="faq" id="perguntas" aria-labelledby="faq-titulo">
+  <h2 class="faq-title" id="faq-titulo">Perguntas frequentes</h2>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>Onde fica o Destac's Centro de Beleza?</summary>
+      <p>Ficamos na Av. Brasil, 396, no bairro Paes Leme, em Imbituba/SC. Se preferir, é só tocar em "Como chegar" no começo da página que abre direto no Google Maps.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Qual o horário de atendimento?</summary>
+      <p>Atendemos de terça a sábado, das 8h às 18h. Aos domingos e segundas o salão fica fechado.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Como faço pra agendar um horário?</summary>
+      <p>Pelo WhatsApp, no <a href="https://wa.me/554899358492" target="_blank" rel="noopener noreferrer">(48) 9935-8492</a>. Basta tocar em "Agendar" no serviço que você quer, que a conversa já abre com a mensagem pronta, e aí é só escolher o melhor dia.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Quais serviços o salão oferece?</summary>
+      <p>Cuidamos de cabelo (corte, coloração, mechas e escova), unhas (manicure e pedicure) e mega hair (aplicação e manutenção). Também temos produtos profissionais para cabelo e atendimento para noivas e formaturas. São 35 anos de história em Imbituba.</p>
+    </details>
+    <details class="faq-item">
+      <summary>O salão atende noivas fora do espaço?</summary>
+      <p>Sim. O atendimento para noivas é externo, no local do seu evento. Chame no WhatsApp pra combinar data e detalhes.</p>
+    </details>
+  </div>
+</section>
+</main>
+
+<!-- RODAPÉ -->
+<footer class="footer" id="contato">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#inicio" aria-label="Destac's Centro de Beleza, voltar ao início">
+        <img src="imagens/avatar-instagram.jpg" width="150" height="150" alt="">
+        <span class="brand-text">
+          <span class="brand-name">DESTAC'S</span>
+          <span class="brand-sub">CENTRO DE BELEZA</span>
+        </span>
+      </a>
+      <p class="footer-desc">35 anos de história em Imbituba. Cabelo, unhas, mega hair, noivas e formaturas.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/destacscentrodebeleza/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.facebook.com/DestacsCentroDeBeleza/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H17V4.5h-2.5A4 4 0 0 0 10.5 8.5V11H8v3.5h2.5V21H14v-6.5h2.7l.6-3.5H14V8.8c0-.5.2-.8.5-.8z"/></svg>
+        </a>
+        <a href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <nav class="footer-links" aria-label="Links rápidos">
+      <h2 class="footer-h">Links rápidos</h2>
+      <ul class="footer-list">
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#sobre">Sobre Nós</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+
+    <nav class="footer-services" aria-label="Serviços">
+      <h2 class="footer-h">Serviços</h2>
+      <ul class="footer-list">
+        <li><a href="#servicos">Cabelo</a></li>
+        <li><a href="#servicos">Unhas</a></li>
+        <li><a href="#servicos">Mega hair</a></li>
+        <li><a href="#servicos">Produtos</a></li>
+        <li><a href="#servicos">Noivas</a></li>
+        <li><a href="#servicos">Formaturas</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer-contact">
+      <h2 class="footer-h">Contato</h2>
+      <ul class="footer-list">
+        <li><span class="lab">WhatsApp</span><a href="https://wa.me/554899358492" target="_blank" rel="noopener noreferrer">(48) 9935-8492</a></li>
+        <li><span class="lab">Telefone fixo</span><a href="tel:+554832554350">(48) 3255-4350</a></li>
+        <li><span class="lab">Endereço</span><a href="https://www.google.com/maps/search/Destac%27s+Centro+de+Beleza+Imbituba+SC" target="_blank" rel="noopener noreferrer">Av. Brasil, 396, Paes Leme<br>Imbituba/SC</a></li>
+        <li><span class="lab">Horário</span>Terça a sábado, 8h às 18h<br>Domingo e segunda fechado</li>
+      </ul>
+    </div>
+
+    <div class="footer-cta">
+      <h2 class="footer-h">Agende seu horário</h2>
+      <p>Fale com a gente pelo WhatsApp e escolha o melhor dia.</p>
+      <a class="btn btn-main" href="https://wa.me/554899358492?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20agendar%20um%20hor%C3%A1rio." target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <div class="footer-bar-inner">
+      <span>© 2026 Destac's Centro de Beleza</span>
+      <span>Website desenvolvido por <a href="https://amplifying.com.br/servicos" target="_blank" rel="noopener noreferrer">AMPLIFYING</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── MENU MOBILE ──
+(function () {
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('menu');
+  function setOpen(open) {
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.classList.toggle('open', open);
+  }
+  burger.addEventListener('click', function () { setOpen(burger.getAttribute('aria-expanded') !== 'true'); });
+  menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+  document.addEventListener('click', function (e) {
+    if (menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) setOpen(false);
+  });
+})();
+
+// ── SLIDER DO HERO (fade, autoplay só com aba ativa e hero visível, swipe) ──
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('#slides .slide'));
+  var dotsEl = document.getElementById('dots');
+  var hero = document.getElementById('inicio');
+  var cur = 0, timer = null, tabOn = !document.hidden, inView = true;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var dots = slides.map(function (_, i) {
+    var b = document.createElement('button');
+    b.className = 'dot' + (i === 0 ? ' on' : '');
+    b.setAttribute('aria-label', 'Foto ' + (i + 1) + ' de ' + slides.length);
+    b.addEventListener('click', function () { go(i); restart(); });
+    dotsEl.appendChild(b);
+    return b;
+  });
+
+  function go(n) {
+    cur = (n + slides.length) % slides.length;
+    slides.forEach(function (s, i) { s.classList.toggle('on', i === cur); });
+    dots.forEach(function (d, i) { d.classList.toggle('on', i === cur); });
+  }
+  function stop() { clearInterval(timer); timer = null; }
+  function start() { stop(); if (!reduce && tabOn && inView) timer = setInterval(function () { go(cur + 1); }, 5500); }
+  function restart() { start(); }
+
+  document.addEventListener('visibilitychange', function () { tabOn = !document.hidden; start(); });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { inView = en[0].isIntersecting; start(); }, { threshold: 0 }).observe(hero);
+  }
+
+  var x0 = 0;
+  hero.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  hero.addEventListener('touchend', function (e) {
+    var d = x0 - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) { go(cur + (d > 0 ? 1 : -1)); restart(); }
+  }, { passive: true });
+
+  start();
+})();
+// ── FAQ (abre e fecha suave; sem animação se o usuário reduziu movimento) ──
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('.faq-item').forEach(function (d) {
+    var s = d.querySelector('summary');
+    var c = d.querySelector('p');
+    if (!s || !c || !c.animate) return;
+    s.addEventListener('click', function (e) {
+      if (reduce.matches) return;
+      e.preventDefault();
+      var closing = d.open && d.dataset.state !== 'closing';
+      if (d._a) d._a.cancel();
+      c.style.overflow = 'hidden';
+      var pb = getComputedStyle(c).paddingBottom;
+      var h, a;
+      if (closing) {
+        d.dataset.state = 'closing';
+        h = c.offsetHeight;
+        a = c.animate(
+          [{ height: h + 'px', paddingBottom: pb, opacity: 1 }, { height: '0px', paddingBottom: '0px', opacity: 0 }],
+          { duration: 240, easing: 'ease' }
+        );
+        a.onfinish = function () { d.open = false; done(); };
+      } else {
+        d.open = true;
+        d.dataset.state = 'opening';
+        h = c.offsetHeight;
+        a = c.animate(
+          [{ height: '0px', paddingBottom: '0px', opacity: 0 }, { height: h + 'px', paddingBottom: pb, opacity: 1 }],
+          { duration: 300, easing: 'ease' }
+        );
+        a.onfinish = done;
+      }
+      d._a = a;
+      function done() { c.style.overflow = ''; d.dataset.state = ''; d._a = null; }
+    });
+  });
+})();
+</script>
+</body>
+</html>
